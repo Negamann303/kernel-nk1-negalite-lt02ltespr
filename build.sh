@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REVISION="$(svn info http://kernel-nk1-negalite-lt02ltespr.googlecode.com/svn/ | grep "^Revision:" | cut -c 11-)"
+REVISION="$(git log --pretty=format:'%h' -n 1)"
 
 CURDATE=`date "+%m-%d-%Y"`
 VERSION="-Negalite-S4-NK1-r$REVISION"
@@ -10,12 +10,6 @@ INITRAMFS=$PARENT/compiled
 INSTALLER=$PARENT/compiled/installer
 
 chmod 755 $PARENT/scripts/gcc-wrapper.py
-
-echo " "
-export USE_CCACHE=1
-export CCACHE_DIR=/usr/arm-cortex_a15-linux-gnueabihf-linaro_4.9.3/bin-ccache
-export PATH=/usr/arm-cortex_a15-linux-gnueabihf-linaro_4.9.3/bin-ccache:/usr/arm-cortex_a15-linux-gnueabihf-linaro_4.9.3/bin:$PATH
-ccache -M 25G
 
 echo " "
 echo "**************************************************************"
@@ -128,7 +122,7 @@ echo "**************************************************************"
 echo "**************************************************************"
 echo " "
 
-export CROSS_COMPILE=/usr/arm-cortex_a15-linux-gnueabihf-linaro_4.9.3/bin-ccache/arm-cortex_a15-linux-gnueabihf-
+export CROSS_COMPILE=/usr/arm-cortex_a15-linux-gnueabihf-linaro_4.9.3/arm-cortex_a15-linux-gnueabihf-linaro_4.9.3/bin/arm-cortex_a15-linux-gnueabihf-
 export ARCH=arm
 
 make VARIANT_DEFCONFIG=negalite_spr_defconfig nega_defconfig DEBUG_DEFCONFIG=negalite_debug_defconfig SELINUX_DEFCONFIG=selinux_defconfig SELINUX_LOG_DEFCONFIG=selinux_log_defconfig
